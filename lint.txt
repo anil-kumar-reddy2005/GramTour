@@ -1,0 +1,40 @@
+﻿
+C:\Users\anilk\OneDrive\Desktop\LINIT\GramTour\seedCreator.js
+  1:18  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\Users\anilk\OneDrive\Desktop\LINIT\GramTour\src\app\actions\authActions.js
+  5:36  warning  'password' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\anilk\OneDrive\Desktop\LINIT\GramTour\src\app\dashboard\page.jsx
+    5:8    warning  'BookingModal' is defined but never used                         @typescript-eslint/no-unused-vars
+  113:53   error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  210:53   error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  210:112  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  227:115  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  227:132  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+C:\Users\anilk\OneDrive\Desktop\LINIT\GramTour\src\components\Navigation.jsx
+  2:25  warning  'Store' is defined but never used            @typescript-eslint/no-unused-vars
+  2:32  warning  'Sparkles' is defined but never used         @typescript-eslint/no-unused-vars
+  2:57  warning  'User' is defined but never used             @typescript-eslint/no-unused-vars
+  2:70  warning  'LogOut' is defined but never used           @typescript-eslint/no-unused-vars
+  2:78  warning  'LayoutDashboard' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\anilk\OneDrive\Desktop\LINIT\GramTour\src\components\ReviewSection.jsx
+  3:16  warning  'MessageSquare' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\anilk\OneDrive\Desktop\LINIT\GramTour\src\db\add_posts_table.js
+  1:18  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\Users\anilk\OneDrive\Desktop\LINIT\GramTour\src\db\seed_more.js
+  1:18  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\Users\anilk\OneDrive\Desktop\LINIT\GramTour\src\db\update_schema.js
+  1:18  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+Γ£û 21 problems (13 errors, 8 warnings)
+
