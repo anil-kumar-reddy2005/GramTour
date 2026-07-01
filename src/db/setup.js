@@ -49,16 +49,24 @@ CREATE TABLE IF NOT EXISTS experiences (
   FOREIGN KEY(village_id) REFERENCES villages(id)
 );
 
+CREATE TABLE IF NOT EXISTS settings (
+  key TEXT PRIMARY KEY,
+  value TEXT
+);
+
 CREATE TABLE IF NOT EXISTS bookings (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER NOT NULL,
-  experience_id INTEGER NOT NULL,
+  village_id INTEGER,
+  experience_id INTEGER,
   booking_date TEXT NOT NULL,
   persons INTEGER NOT NULL,
   contact_phone TEXT NOT NULL,
   status TEXT DEFAULT 'pending',
+  photo_id_url TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY(user_id) REFERENCES users(id),
+  FOREIGN KEY(village_id) REFERENCES villages(id),
   FOREIGN KEY(experience_id) REFERENCES experiences(id)
 );
 
@@ -83,6 +91,41 @@ CREATE TABLE IF NOT EXISTS ai_plans (
   ai_result_text TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY(user_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS creator_posts (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  creator_id INTEGER NOT NULL,
+  title TEXT NOT NULL,
+  description TEXT,
+  image_url TEXT,
+  price INTEGER DEFAULT 0,
+  location TEXT,
+  likes_count INTEGER DEFAULT 0,
+  comments_count INTEGER DEFAULT 0,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY(creator_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS reviews (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  target_id INTEGER NOT NULL,
+  target_type TEXT NOT NULL,
+  rating INTEGER NOT NULL CHECK(rating BETWEEN 1 AND 5),
+  comment TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY(user_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS wishlist (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  item_id INTEGER NOT NULL,
+  item_type TEXT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY(user_id) REFERENCES users(id),
+  UNIQUE(user_id, item_id, item_type)
 );
 `);
 
@@ -148,6 +191,12 @@ if (checkUsers.count === 0) {
   insertUser.run('Admin', 'admin@gramtour.com', 'admin_hash_placeholder', 'admin');
   insertUser.run('Test Tourist', 'tourist@gramtour.com', 'user_hash_placeholder', 'tourist');
   console.log("Users seeded.");
+}
+
+const checkSettings = db.prepare("SELECT count(*) as count FROM settings WHERE key = 'payment_qr_code_url'").get();
+if (checkSettings.count === 0) {
+  db.prepare("INSERT INTO settings (key, value) VALUES ('payment_qr_code_url', '/uploads/1771949914046_WhatsApp_Image_2026_02_24_at_21.47.36.jpeg')").run();
+  console.log("Default payment QR Code settings seeded.");
 }
 
 console.log("Database initialized successfully.");

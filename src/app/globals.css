@@ -137,3 +137,49 @@ button {
   margin-bottom: 2rem;
   color: var(--color-primary);
 }
+
+.only-print {
+  display: none !important;
+}
+
+@media print {
+  .no-print,
+  nav,
+  .navbar,
+  header,
+  footer,
+  button,
+  .btn-outline,
+  .btn-primary,
+  .back-btn,
+  aside {
+    display: none !important;
+  }
+
+  .only-print {
+    display: inline !important;
+  }
+
+  body, html {
+    background: #fff !important;
+    color: #000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  main, .container {
+    padding: 0 !important;
+    margin: 0 auto !important;
+    max-width: 100% !important;
+  }
+
+  div[style*="background: white"] {
+    background: #fff !important;
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    border-radius: 8px !important;
+    margin-top: 0 !important;
+  }
+}

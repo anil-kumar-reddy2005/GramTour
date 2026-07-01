@@ -58,15 +58,16 @@ export async function POST(request) {
         const user_name = authUser ? authUser.name : 'Adventurer';
 
         const stmt = db.prepare(`
-      INSERT INTO bookings (user_id, village_id, experience_id, booking_date, persons, contact_phone, status)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO bookings (user_id, village_id, experience_id, booking_date, persons, contact_phone, status, photo_id_url)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
         // Use village_id directly if provided, fallback to experience_id for legacy
         const village_id = body.village_id || null;
         const experience_id = body.experience_id || null;
+        const photo_id_url = body.photo_id_url || null;
 
-        const result = stmt.run(user_id, village_id, experience_id, body.booking_date, body.persons, body.contact_phone, body.status || 'pending');
+        const result = stmt.run(user_id, village_id, experience_id, body.booking_date, body.persons, body.contact_phone, body.status || 'pending', photo_id_url);
 
         // ------------------------------------------------------------------
         // SIMULATE EMAIL CONFIRMATION DISPATCH
@@ -77,7 +78,7 @@ export async function POST(request) {
         console.log(`   Subject: Booking Confirmed - Reference ID #${result.lastInsertRowid}`);
         console.log(`   Event Date: ${body.booking_date} | Guests: ${body.persons}`);
         console.log(`   Target: ${village_id ? 'Village Stay' : 'Experience'}`);
-        console.log(`   Payment Status: SUCCESS (Simulated via QR)`);
+        console.log(`   Payment Status: SUCCESS (Simulated via ${body.payment_method ? body.payment_method.toUpperCase() : 'QR'})`);
         console.log(`======================================================\n`);
 
         return NextResponse.json({ message: "Booking created successfully", id: result.lastInsertRowid }, { status: 201 });

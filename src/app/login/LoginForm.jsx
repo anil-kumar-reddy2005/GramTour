@@ -64,11 +64,8 @@ function LoginFormContent() {
             } else {
                 setSuccess(true);
                 setTimeout(() => {
-                    if (result.user?.role === 'admin') {
-                        router.push('/admin');
-                    } else {
-                        router.push('/');
-                    }
+                    const redirectUrl = searchParams.get('redirect') || '/';
+                    router.push(redirectUrl);
                     router.refresh();
                 }, 800);
             }

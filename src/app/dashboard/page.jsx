@@ -2,7 +2,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { Calendar, Users, Phone, Navigation, Clock, CheckCircle, MapPin, Heart, Star, Trash2, User, X, HelpCircle, ChevronDown, ChevronUp, Key } from 'lucide-react';
+import { Calendar, Users, Phone, Navigation, Clock, CheckCircle, MapPin, Heart, Star, Trash2, User, X, HelpCircle, ChevronDown, ChevronUp, Key, FileCheck } from 'lucide-react';
 import SmartImage from '../../components/SmartImage';
 import ShimmerSkeleton from '../../components/ShimmerSkeleton';
 import './dashboard.css';
@@ -307,6 +307,20 @@ function DashboardContent() {
                                                         </div>
                                                     </div>
                                                 </div>
+                                                {booking.photo_id_url && (
+                                                    <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px dashed var(--color-border)', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem' }}>
+                                                        <FileCheck size={18} style={{ color: 'var(--color-primary)' }} />
+                                                        <span style={{ color: 'var(--color-text-muted)' }}>Traveler Photo ID:</span>
+                                                        <a 
+                                                            href={booking.photo_id_url} 
+                                                            target="_blank" 
+                                                            rel="noopener noreferrer" 
+                                                            style={{ color: 'var(--color-primary)', fontWeight: '600', textDecoration: 'none' }}
+                                                        >
+                                                            View ID Copy
+                                                        </a>
+                                                    </div>
+                                                )}
                                                 {booking.status === 'confirmed' && (
                                                     <div style={{ marginTop: '1.5rem', borderTop: '1px solid var(--color-border)', paddingTop: '1rem', display: 'flex', justifyContent: 'flex-end' }}>
                                                         <button

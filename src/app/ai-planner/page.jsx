@@ -295,10 +295,16 @@ Travel Tips: ${result.travel_tips}
                                         <p style={{ margin: 0, color: 'var(--color-text-muted)', fontSize: '0.875rem', lineHeight: 1.5 }}>{result.travel_tips}</p>
                                     </div>
                                     
-                                    {/* Google Maps Embed placeholder */}
-                                    <div style={{ height: '150px', background: '#e2e8f0', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', color: '#64748b' }}>
-                                        <MapPin size={24} style={{ marginBottom: '0.25rem' }} />
-                                        <span style={{ fontSize: '0.75rem', fontWeight: '500' }}>Itinerary Map Route Preview</span>
+                                    {/* Google Maps Embed */}
+                                    <div className="map-container" style={{ height: '250px', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--color-border)' }}>
+                                        <iframe 
+                                            width="100%" 
+                                            height="100%" 
+                                            style={{ border: 0 }} 
+                                            loading="lazy" 
+                                            allowFullScreen 
+                                            src={`https://maps.google.com/maps?q=${encodeURIComponent(result.recommended_village + ', India')}&z=11&output=embed`}
+                                        ></iframe>
                                     </div>
                                 </div>
 

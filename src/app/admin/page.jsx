@@ -229,6 +229,7 @@ export default function AdminDashboard() {
                                     <th>Experience</th>
                                     <th>Village</th>
                                     <th>Guests</th>
+                                    <th>Photo ID</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -241,6 +242,20 @@ export default function AdminDashboard() {
                                     <td>{booking.village_name}</td>
                                     <td>{booking.persons}</td>
                                     <td>
+                                        {booking.photo_id_url ? (
+                                            <a 
+                                                href={booking.photo_id_url} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer" 
+                                                style={{ color: 'var(--color-primary)', fontWeight: '600', textDecoration: 'none' }}
+                                            >
+                                                View ID
+                                            </a>
+                                        ) : (
+                                            <span style={{ color: 'var(--color-text-muted)' }}>None</span>
+                                        )}
+                                    </td>
+                                    <td>
                                         <select value={booking.status} onChange={(e) => handleStatusChange(booking.id, e.target.value)} className={`status-select ${booking.status.toLowerCase()}`}>
                                             <option value="pending">Pending</option>
                                             <option value="confirmed">Confirmed</option>
@@ -252,7 +267,7 @@ export default function AdminDashboard() {
                                     </td>
                                 </tr>))}
                                 {bookings.length === 0 && (<tr>
-                                    <td colSpan={7} className="text-center py-4">No bookings found.</td>
+                                    <td colSpan={8} className="text-center py-4">No bookings found.</td>
                                 </tr>)}
                             </tbody>
                         </table>

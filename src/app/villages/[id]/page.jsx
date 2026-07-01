@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { MapPin, Calendar, IndianRupee, Clock, BookOpen } from 'lucide-react';
 import BookingModal from '../../../components/BookingModal';
 import ReviewSection from '../../../components/ReviewSection';
@@ -10,6 +10,7 @@ import ShimmerSkeleton from '../../../components/ShimmerSkeleton';
 import './village.css';
 export default function VillageDetails() {
     const { id } = useParams();
+    const router = useRouter();
     const [village, setVillage] = useState(null);
     const [experiences, setExperiences] = useState([]);
     const [products, setProducts] = useState([]);
@@ -29,7 +30,18 @@ export default function VillageDetails() {
             setLoading(false);
         });
     }, [id]);
-    const openModal = (target, type = 'experience') => {
+    const openModal = async (target, type = 'experience') => {
+        try {
+            const res = await fetch('/api/auth/me');
+            const data = await res.json();
+            if (!data.user) {
+                alert('Please sign in to book experiences or homestays.');
+                router.push(`/login?redirect=${encodeURIComponent(window.location.pathname)}`);
+                return;
+            }
+        } catch (err) {
+            console.error("Auth check failed:", err);
+        }
         setTargetType(type);
         setSelectedTarget(target);
         setIsModalOpen(true);
@@ -169,7 +181,7 @@ export default function VillageDetails() {
                     <hr />
 
                     <div className="map-container">
-                        <iframe width="100%" height="250" style={{ border: 0, borderRadius: 'var(--radius-md)' }} loading="lazy" allowFullScreen src={`https://maps.google.com/maps?q=${village.latitude},${village.longitude}&z=12&output=embed`}></iframe>
+                        <iframe width="100%" height="250" style={{ border: 0, borderRadius: 'var(--radius-md)' }} loading="lazy" allowFullScreen src={`https://maps.google.com/maps?q=${encodeURIComponent(village.name + ', ' + village.state + ', India')}&z=12&output=embed`}></iframe>
                     </div>
                     <div className="coordinates text-muted" style={{ fontSize: '0.75rem', marginTop: '0.5rem', textAlign: 'center' }}>
                         Lat: {village.latitude}, Lng: {village.longitude}

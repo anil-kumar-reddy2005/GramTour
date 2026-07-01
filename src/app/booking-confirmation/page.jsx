@@ -3,7 +3,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { CheckCircle, Download, Mail, Home, Calendar, Users, CreditCard, ArrowLeft, Printer } from 'lucide-react';
+import { CheckCircle, Download, Mail, Home, Calendar, Users, CreditCard, ArrowLeft, Printer, MapPin } from 'lucide-react';
 
 function BookingConfirmationContent() {
     const searchParams = useSearchParams();
@@ -81,6 +81,7 @@ function BookingConfirmationContent() {
                 {/* Header Go Back */}
                 <button 
                     onClick={() => router.push('/dashboard')} 
+                    className="no-print"
                     style={{ background: 'none', border: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', color: 'var(--color-text-muted)', marginBottom: '1.5rem', fontWeight: '500' }}
                 >
                     <ArrowLeft size={16} /> Back to Dashboard
@@ -163,10 +164,24 @@ function BookingConfirmationContent() {
                                     <span style={{ fontWeight: '600', color: 'var(--color-text-main)' }}>UPI QR Code</span>
                                 </div>
                             </div>
+                            {booking.photo_id_url && (
+                                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', gridColumn: 'span 2' }}>
+                                    <Download size={18} style={{ color: 'var(--color-primary)', marginTop: '0.15rem' }} />
+                                    <div>
+                                        <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', display: 'block' }}>Traveler Photo ID</span>
+                                        <a href={booking.photo_id_url} target="_blank" rel="noopener noreferrer" style={{ fontWeight: '600', color: 'var(--color-primary)', textDecoration: 'none' }} className="no-print">
+                                            View Uploaded ID Document
+                                        </a>
+                                        <span style={{ fontWeight: '600', color: 'var(--color-text-main)', display: 'none' }} className="only-print">
+                                            ID Uploaded & Verified
+                                        </span>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         {/* Interactive Buttons */}
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', borderTop: '1px dashed var(--color-border)', paddingTop: '1.75rem' }}>
+                        <div className="no-print" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', borderTop: '1px dashed var(--color-border)', paddingTop: '1.75rem' }}>
                             <div style={{ display: 'flex', gap: '1rem' }}>
                                 <button 
                                     onClick={handlePrint}

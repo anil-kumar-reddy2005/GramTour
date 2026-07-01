@@ -16,12 +16,18 @@ export default function AdminLoginPage() {
 
     const handleLogin = async (e) => {
         e?.preventDefault();
+        
+        if (!email || !password) {
+            setError('Please fill in both email and password.');
+            return;
+        }
+
         setLoading(true);
         setError(null);
         setSuccess(false);
 
         try {
-            const result = await login(email || 'admin@gramtour.com', password || 'password123');
+            const result = await login(email, password);
             setLoading(false);
 
             if (result.error) {
@@ -39,16 +45,6 @@ export default function AdminLoginPage() {
             setLoading(false);
             setError('Connection failed. Please try again.');
         }
-    };
-
-    const handleFastAccess = () => {
-        setEmail('admin@gramtour.com');
-        setPassword('password123');
-        // Instantly submit
-        setLoading(true);
-        setTimeout(() => {
-            handleLogin();
-        }, 300);
     };
 
     return (
@@ -206,30 +202,6 @@ export default function AdminLoginPage() {
                             {loading ? 'Authenticating...' : 'Secure Authorization'}
                         </button>
                     </form>
-
-                    <div style={{ marginTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1.5rem', textAlign: 'center' }}>
-                        <p style={{ fontSize: '0.85rem', color: '#9ca3af', marginBottom: '1rem' }}>Are you authorized to access this platform?</p>
-                        <button
-                            type="button"
-                            onClick={handleFastAccess}
-                            style={{
-                                background: 'rgba(250, 204, 21, 0.1)',
-                                border: '1px dashed #facc15',
-                                padding: '0.75rem 1rem',
-                                borderRadius: '12px',
-                                color: '#facc15',
-                                fontSize: '0.875rem',
-                                fontWeight: '600',
-                                width: '100%',
-                                cursor: 'pointer',
-                                transition: 'background 0.2s'
-                            }}
-                            onMouseOver={e => e.target.style.background = 'rgba(250, 204, 21, 0.2)'}
-                            onMouseOut={e => e.target.style.background = 'rgba(250, 204, 21, 0.1)'}
-                        >
-                            🔑 Secure One-Click Direct Sign In
-                        </button>
-                    </div>
                 </motion.div>
             </div>
         </div>
